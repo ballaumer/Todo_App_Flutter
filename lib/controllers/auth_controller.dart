@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:todo/utils/navigator.dart';
+import 'package:todo/views/log_in.dart';
 import '../helper/api_response.dart';
 import '../services/auth_services.dart';
 
@@ -17,5 +19,13 @@ class GoogleAuthController extends ChangeNotifier{
       return ApiResponse(data: false);
 
     }
+  }
+
+  signOut(context)async{
+    await _googleSignInService.signOut().then((value) {
+      if(value.data == true){
+        Navi.navigatePushRemoveTo(context, LoginScreen());
+      }
+    });
   }
 }

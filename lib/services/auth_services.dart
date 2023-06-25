@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:todo/helper/api_response.dart';
 
 class GoogleAuthServices {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -25,12 +26,15 @@ class GoogleAuthServices {
 
 
   // services for log-out
-  Future<void> signOut() async {
+  Future<ApiResponse> signOut() async {
     try {
       await _googleSignIn.signOut();
       await _auth.signOut();
+      return ApiResponse(data: true);
     } catch (e) {
       print('Error signing out: $e');
+      return ApiResponse(data: false);
+
     }
   }
 }

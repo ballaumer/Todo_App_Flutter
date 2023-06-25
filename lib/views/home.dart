@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/utils/colors.dart';
 import '../controllers/add_update_tasks_controller.dart';
+import '../controllers/auth_controller.dart';
 import '../utils/navigator.dart';
 import '../utils/textstyle.dart';
 import 'add_or_update_tasks.dart';
@@ -75,54 +76,70 @@ class _HomeScreenState extends State<HomeScreen> {
                         Container(
                           height: 261,
                           color: Colors.black.withOpacity(0.4),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "26",
-                                        style: textStyles(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.normal),
+                          child: Stack(
+
+                            children: [
+                              Consumer<GoogleAuthController>(
+                                builder:(context, pro, child) => Align(
+                                    alignment:Alignment.topRight,
+                                    child: InkWell(
+                                      onTap: (){
+                                        pro.signOut(context);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(right: 20,top:40),
+                                        child: Icon(Icons.logout,color: Colors.white),
                                       ),
-                                      Text(
-                                        "Personal",
-                                        style: textStyles(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                    ],
+                                    )),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "26",
+                                          style: textStyles(
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.normal),
+                                        ),
+                                        Text(
+                                          "Personal",
+                                          style: textStyles(
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.normal),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "27",
-                                        style: textStyles(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                      Text(
-                                        "Business",
-                                        style: textStyles(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                    ],
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "27",
+                                          style: textStyles(
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.normal),
+                                        ),
+                                        Text(
+                                          "Business",
+                                          style: textStyles(
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.normal),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -132,6 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
+
           Consumer<AddorUpdateTasksController>(
               builder: (context, provider, child) => provider.isLoading
                   ? Center(child: CircularProgressIndicator())
